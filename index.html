@@ -328,9 +328,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 }
 .s2rm-visual{
   position:relative;border-radius:20px;overflow:hidden;
-  background:#1a0e08;min-height:480px;
+  background:#1a0e08;min-height:520px;
   box-shadow:var(--sh-deep);
 }
+.s2rm-real-img{object-position:center center;}
 .s2rm-real-img{
   position:absolute;inset:0;
   width:100%;height:100%;object-fit:cover;
@@ -1431,7 +1432,8 @@ body.modal-open{overflow:hidden;}
   .foot-bottom{flex-direction:column;text-align:left;gap:10px;align-items:flex-start;}
   .ticker-item{font-size:10px;padding:0 22px;gap:22px;}
   .s2rm-grid{gap:24px;}
-  .s2rm-visual{min-height:0;aspect-ratio:16/10;border-radius:16px;}
+  .s2rm-visual{min-height:0;aspect-ratio:16/9;border-radius:16px;}
+  .s2rm-real-img{object-position:center;}
   .s2rm-visual-overlay{left:14px;right:14px;bottom:14px;gap:10px;}
   .s2rm-spec{padding:11px 13px;gap:7px;}
   .s2rm-spec-row{gap:14px;}
