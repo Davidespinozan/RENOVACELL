@@ -906,6 +906,13 @@ footer{background:var(--ink);color:rgba(249,250,248,.6);padding:60px 28px 28px;}
 
 /* REVEAL */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+@media(max-width:640px){
+  .rv{transform:translateY(12px);transition:opacity .6s var(--ease),transform .6s var(--ease);}
+}
+/* Safety: if JS disabled or fails, show everything */
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none;}
+}
 .rv.in{opacity:1;transform:none;}
 .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
 
@@ -1350,14 +1357,45 @@ body.modal-open{overflow:hidden;}
   .pro-card-cta::after{content:'→';font-size:.95rem;}
 }
 
+
+.hero-sub-mobile{display:none;}
+@media(max-width:640px){
+  .hero-sub-desktop{display:none;}
+  .hero-sub-mobile{display:block;}
+}
+
+.hero-mini-ticker{display:none;}
+@media(max-width:1100px){
+  .hero-mini-ticker{
+    display:flex;align-items:center;gap:10px;
+    background:var(--green);color:var(--white);
+    padding:10px 16px;border-radius:999px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    margin:0 0 22px;width:fit-content;
+    box-shadow:0 8px 20px rgba(0,115,17,.22);
+    overflow:hidden;max-width:100%;
+    white-space:nowrap;
+  }
+  .hero-mini-ticker span:nth-child(even){
+    color:rgba(255,255,255,.55);
+  }
+}
+@media(max-width:640px){
+  .hero-mini-ticker{
+    font-size:8.5px;gap:7px;padding:8px 14px;margin-bottom:18px;
+    letter-spacing:.12em;
+  }
+}
 /* RESPONSIVE */
 @media(max-width:1100px){
   .nav-links{display:none;}
   .nav-burger{display:flex;}
   .topbar-cert{display:none;}
   .hero{padding:120px 20px 60px;}
-  .hero-inner{grid-template-columns:1fr;gap:32px;}
-  .hero-right{min-height:380px;}
+  .hero-inner{grid-template-columns:1fr;gap:24px;}
+  .hero-left{order:2;}
+  .hero-right{order:1;min-height:280px;aspect-ratio:4/3;}
   .section{padding:60px 20px;}
   .section-head{margin-bottom:40px;}
   .s2rm-grid{grid-template-columns:1fr;gap:32px;}
@@ -1381,24 +1419,27 @@ body.modal-open{overflow:hidden;}
   .nav-name span{display:none;}
   .nav-name b{font-size:14.5px;}
   .btn-primary-nav{padding:9px 14px;font-size:12px;}
-  .hero{padding:110px 18px 50px;}
-  .hero h1{font-size:clamp(1.7rem,7vw,2.2rem);}
-  .hero h1 .small{font-size:.42em;margin-bottom:10px;}
-  .hero-sub{font-size:.95rem;}
-  .hero-cta-row{flex-direction:column;gap:10px;margin-bottom:36px;}
+  .hero{padding:90px 16px 40px;}
+  .hero h1{font-size:clamp(1.6rem,6.5vw,2.05rem);margin-bottom:14px;}
+  .hero h1 .small{font-size:.42em;margin-bottom:8px;}
+  .hero-sub{font-size:.92rem;margin-bottom:22px;line-height:1.5;}
+  .hero-cta-row{flex-direction:column;gap:8px;margin-bottom:24px;}
   .hero-cta-row > a{width:100%;justify-content:center;}
-  .hero-right{min-height:340px;}
+  .hero-right{min-height:240px;aspect-ratio:5/4;}
   .hero-data{left:18px;right:18px;bottom:18px;}
   .hero-data-quote{font-size:.95rem;}
-  .hero-certs-row{gap:8px;}
-  .cert-badge{min-width:0;flex:1 1 calc(50% - 4px);padding:10px 12px;}
-  .cert-badge b{font-size:10.5px;}
-  .cert-badge small{font-size:9px;}
+  .hero-certs-row{display:none;}
   .section{padding:50px 18px;}
   .section h2{font-size:clamp(1.5rem,6.5vw,2rem);}
   .section h2 .display{font-size:.5em;margin-bottom:10px;}
   .compliance{padding:50px 18px;}
-  .compliance-grid{grid-template-columns:1fr;}
+  .compliance-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .compliance-card{padding:18px 14px 14px;}
+  .compliance-num{font-size:9px;}
+  .compliance-card-icon{width:38px;height:38px;font-size:1rem;margin-bottom:12px;}
+  .compliance-card-title{font-size:.92rem;margin-bottom:8px;}
+  .compliance-card-text{font-size:11.5px;line-height:1.5;margin-bottom:10px;}
+  .compliance-card-num{font-size:8.5px;padding-top:8px;}
   .compliance-head h3{font-size:1.25rem;}
   .pro-grid,.cosm-grid{grid-template-columns:1fr 1fr;gap:12px;}
   .pro-card-name{font-size:1rem;}
@@ -1462,9 +1503,9 @@ body.modal-open{overflow:hidden;}
   .mobile-drawer-link{font-size:16px;padding:16px 18px;}
 }
 @media(max-width:380px){
-  .hero h1{font-size:1.6rem;}
-  .cert-badge{flex:1 1 100%;}
+  .hero h1{font-size:1.45rem;}
   .nav-name b{font-size:13.5px;}
+  .compliance-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -1555,6 +1596,18 @@ body.modal-open{overflow:hidden;}
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-left">
+      <!-- MOBILE-ONLY mini ticker right after image -->
+      <div class="hero-mini-ticker rv">
+        <span>S²RM™</span>
+        <span>·</span>
+        <span>CE</span>
+        <span>·</span>
+        <span>COFEPRIS</span>
+        <span>·</span>
+        <span>ISO 13485</span>
+        <span>·</span>
+        <span>Desde 2008</span>
+      </div>
       <div class="hero-kicker rv">Desde 2008 · México + Unión Europea</div>
       <h1 class="rv d1">
         <span class="small">Medical Grade Anti-Aging</span>
@@ -1562,8 +1615,11 @@ body.modal-open{overflow:hidden;}
         para profesionales<br>
         de la salud.
       </h1>
-      <p class="hero-sub rv d2">
+      <p class="hero-sub rv d2 hero-sub-desktop">
         <b>Terapia celular y rejuvenecimiento avanzado</b> con fórmulas únicas que restauran, revitalizan y protegen el cuerpo desde adentro. Línea profesional de uso clínico exclusivo y línea cosmética de venta directa al público.
+      </p>
+      <p class="hero-sub rv d2 hero-sub-mobile">
+        <b>Terapia celular avanzada</b> con tecnología propietaria S²RM™. Línea profesional y línea cosmética.
       </p>
       <div class="hero-cta-row rv d3">
         <a href="#contacto" class="btn-primary">Acceso médico</a>
@@ -2389,8 +2445,35 @@ body.modal-open{overflow:hidden;}
 </footer>
 
 <script>
-const io = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('in')), {threshold:.08});
+// REVEAL OBSERVER — more reliable for mobile
+const io = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach(x => {
+      if(x.isIntersecting){
+        x.target.classList.add('in');
+        observer.unobserve(x.target);
+      }
+    });
+  },
+  { threshold: 0.01, rootMargin: '0px 0px -5% 0px' }
+);
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// FALLBACK: any .rv element still not revealed after 2s gets shown anyway
+// (covers iOS Safari quirks where IO sometimes fails on rapid scroll)
+setTimeout(() => {
+  document.querySelectorAll('.rv:not(.in)').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight && rect.bottom > 0){
+      el.classList.add('in');
+    }
+  });
+}, 2000);
+
+// BULLETPROOF: force all .rv elements visible after 4s no matter what
+setTimeout(() => {
+  document.querySelectorAll('.rv:not(.in)').forEach(el => el.classList.add('in'));
+}, 4000);
 document.querySelector('.form-check-box')?.addEventListener('click', function(){this.classList.toggle('checked');});
 
 // HAMBURGER MENU
