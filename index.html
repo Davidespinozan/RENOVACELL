@@ -133,14 +133,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 
 /* HERO — INSTITUCIONAL */
 .hero{
-  padding:140px 28px 80px;
+  padding:120px 28px 60px;
   background:var(--bone);
   border-bottom:1px solid var(--line);
 }
 .hero-inner{
   max-width:1440px;margin:0 auto;
   display:grid;grid-template-columns:1.05fr 1fr;
-  gap:64px;align-items:stretch;
+  gap:48px;align-items:center;
 }
 .hero-left{display:flex;flex-direction:column;justify-content:center;padding:24px 0;}
 .hero-kicker{
@@ -224,7 +224,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 /* Hero right - imagen médico institucional */
 .hero-right{
   position:relative;border-radius:20px;overflow:hidden;
-  background:var(--bone-warm);min-height:540px;
+  background:var(--bone-warm);min-height:460px;
   box-shadow:var(--sh-deep);
   isolation:isolate;
 }
@@ -1367,6 +1367,26 @@ body.modal-open{overflow:hidden;}
 
 /* CTA BG EFFECT */
 .cta-final{position:relative;overflow:hidden;background:var(--green-dark);}
+.hero{position:relative;overflow:hidden;}
+.hero-bg-effect{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  z-index:0;
+  pointer-events:none;
+  opacity:.85;
+}
+.hero-dna{
+  animation:dnaFlow 18s ease-in-out infinite;
+}
+.hero-dna:nth-of-type(2){animation-delay:-9s;}
+@keyframes dnaFlow{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+}
+.hero-inner,.hero-left,.hero-right{position:relative;z-index:1;}
+
+/* CTA BG EFFECT */
 .cta-bg-effect{
   position:absolute;
   inset:0;
