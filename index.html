@@ -1122,7 +1122,10 @@ body.menu-open{overflow:hidden;}
 
 
 /* MOBILE COMPACT CARDS + PRODUCT MODAL */
-.pro-card[role="button"]{cursor:pointer;}
+.pro-card[role="button"],.cosm-card[role="button"]{cursor:default;}
+@media(max-width:1100px){
+  .pro-card[role="button"],.cosm-card[role="button"]{cursor:pointer;}
+}
 
 @media(max-width:640px){
   /* Hide heavy elements on mobile cards */
@@ -1159,6 +1162,7 @@ body.menu-open{overflow:hidden;}
 .product-modal-backdrop{
   position:fixed;inset:0;z-index:700;
   background:rgba(10,12,8,.55);
+  -webkit-backdrop-filter:blur(6px);
   backdrop-filter:blur(6px);
   opacity:0;visibility:hidden;
   transition:opacity .3s var(--ease),visibility .3s;
@@ -1169,7 +1173,7 @@ body.menu-open{overflow:hidden;}
 .product-modal{
   background:var(--white);
   width:100%;max-width:520px;
-  max-height:92vh;
+  max-height:92vh;max-height:92dvh;
   border-radius:24px 24px 0 0;
   overflow-y:auto;overscroll-behavior:contain;
   padding:0;
@@ -1177,6 +1181,8 @@ body.menu-open{overflow:hidden;}
   transition:transform .35s var(--ease);
   display:flex;flex-direction:column;
   -webkit-overflow-scrolling:touch;
+  will-change:transform;
+  position:relative;
 }
 .product-modal-backdrop.open .product-modal{transform:translateY(0);}
 .product-modal-drag{
@@ -1255,12 +1261,13 @@ body.menu-open{overflow:hidden;}
 .product-modal-spec-row b.green{color:var(--green);}
 .product-modal-cta-row{
   display:flex;flex-direction:column;gap:10px;
-  padding:20px 22px 28px;
-  padding-bottom:calc(max(env(safe-area-inset-bottom, 0px), 20px));
+  padding:18px 22px 20px;
+  padding-bottom:max(20px, env(safe-area-inset-bottom));
   border-top:1px solid var(--line);
   background:var(--bone);
   position:sticky;bottom:0;
   flex-shrink:0;
+  z-index:2;
 }
 .product-modal-cta-primary{
   background:var(--green);color:var(--white);border:none;
@@ -1292,6 +1299,47 @@ body.modal-open{overflow:hidden;}
   .product-modal{border-radius:24px;max-width:560px;max-height:88vh;}
   .product-modal-drag{display:none;}
   .product-modal-cta-row{position:static;}
+}
+
+
+.product-modal::before{
+  content:'';
+  position:sticky;top:0;
+  display:block;height:0;
+  width:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,transparent 100%);
+  pointer-events:none;
+  z-index:1;
+}
+/* Tap highlight remove */
+.pro-card[role="button"],.cosm-card[role="button"]{
+  -webkit-tap-highlight-color:transparent;
+}
+/* Better tap target — entire card */
+@media(max-width:1100px){
+  .pro-card[role="button"]:active{transform:scale(.985);}
+  .cosm-card[role="button"]:active{transform:scale(.985);}
+}
+/* Modal CTA spacing fix: ensure button text never wraps */
+.product-modal-cta-primary,.product-modal-cta-ghost{
+  white-space:nowrap;
+}
+/* Pro card on mobile — make whole card visually look tappable */
+@media(max-width:640px){
+  .pro-card,.cosm-card{
+    transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+  }
+  /* Hide cosm card buy button visually on mobile (whole card is tap target) */
+  .cosm-card-buy{display:none;}
+  .cosm-card-foot{justify-content:flex-start;}
+  /* Show a subtle chevron instead on cosm cards */
+  .cosm-card-foot::after{
+    content:'→';
+    color:var(--green);font-weight:700;font-size:1rem;
+    margin-left:auto;align-self:center;
+  }
+  /* Pro card cta on mobile — already there but ensure visible */
+  .pro-card-cta::after{content:'→';font-size:.95rem;}
 }
 
 /* RESPONSIVE */
@@ -2373,7 +2421,7 @@ function openProductModal(card){
   
   const cofeprisEl = modalBackdrop.querySelector('.product-modal-cofepris');
   if(data.type === 'profesional'){
-    cofeprisEl.style.display = '';
+    cofeprisEl.style.display = 'inline-flex';
     modalCtaPrimary.textContent = 'Solicitar cotización';
   } else {
     cofeprisEl.style.display = 'none';
@@ -2423,18 +2471,19 @@ function closeProductModal(){
 }
 
 // Attach to all pro and cosm cards
+const MOBILE_BREAKPOINT = 1100;
+function isMobile(){return window.matchMedia('(max-width: ' + MOBILE_BREAKPOINT + 'px)').matches;}
+
 document.querySelectorAll('.pro-card[role="button"], .cosm-card[role="button"]').forEach(card => {
   card.addEventListener('click', e => {
-    // Don't trigger if clicking the buy button inside cosm card directly
-    if(e.target.closest('.cosm-card-buy')) {
-      e.stopPropagation();
-      openProductModal(card);
-      return;
-    }
+    // Desktop: cards are not interactive popups (info already visible)
+    if(!isMobile()) return;
+    // On mobile: tapping ANYWHERE on card opens modal (including buy buttons)
+    e.preventDefault();
     openProductModal(card);
   });
   card.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' '){
+    if((e.key === 'Enter' || e.key === ' ') && isMobile()){
       e.preventDefault();
       openProductModal(card);
     }
