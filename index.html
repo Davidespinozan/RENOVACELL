@@ -1381,10 +1381,7 @@ body.modal-open{overflow:hidden;}
 
 
 .hero-sub-mobile{display:none;}
-@media(max-width:640px){
-  .hero-sub-desktop{display:none;}
-  .hero-sub-mobile{display:block;}
-}
+
 
 
 /* CTA BG EFFECT */
@@ -1447,7 +1444,7 @@ body.modal-open{overflow:hidden;}
   .nav-name b{font-size:14.5px;}
   .btn-primary-nav{padding:9px 14px;font-size:12px;}
   .hero{padding:118px 16px 40px;}
-  .hero-data{display:none;}
+  
   .hero-right::after{display:none;}
   .hero h1{font-size:clamp(1.6rem,6.5vw,2.05rem);margin-bottom:14px;}
   .hero h1 .small{font-size:.42em;margin-bottom:8px;}
@@ -1455,9 +1452,9 @@ body.modal-open{overflow:hidden;}
   .hero-cta-row{flex-direction:column;gap:8px;margin-bottom:24px;}
   .hero-cta-row > a{width:100%;justify-content:center;}
   .hero-right{min-height:240px;aspect-ratio:5/4;}
-  .hero-data{left:18px;right:18px;bottom:18px;}
-  .hero-data-quote{font-size:.95rem;}
-  .hero-certs-row{display:none;}
+  
+  
+  
   .section{padding:50px 18px;}
   .section h2{font-size:clamp(1.5rem,6.5vw,2rem);}
   .section h2 .display{font-size:.5em;margin-bottom:10px;}
@@ -1719,13 +1716,53 @@ body.modal-open{overflow:hidden;}
 }
 /* MOBILE */
 @media(max-width:640px){
-  .hero-dark .hero-inner{padding:104px 18px 56px;gap:36px;}
-  .hero-dark .hero-kicker{margin-bottom:24px;font-size:10px;}
-  .hero-dark .hero-headline{font-size:clamp(2rem,8.5vw,2.6rem);margin-bottom:22px;}
-  .hero-dark .hero-sub{font-size:1.02rem;margin-bottom:32px;}
-  .hero-dark .hero-cta-row{flex-direction:column;}
-  .hero-dark .btn-hero-primary,.hero-dark .btn-hero-ghost{width:100%;justify-content:center;}
-  .hero-image-frame{aspect-ratio:5/4;}
+  /* HERO MOBILE LUXURY — cinematográfico, limpio, respirado */
+  .hero.hero-dark{min-height:auto;}
+  .hero-dark .hero-inner{
+    padding:120px 24px 64px;
+    gap:40px;
+    min-height:auto;
+  }
+  .hero-dark .hero-kicker{
+    margin-bottom:22px;
+    font-size:9.5px;
+    letter-spacing:.18em;
+  }
+  .hero-dark .hero-kicker::before{width:24px;}
+  .hero-dark .hero-headline{
+    font-size:clamp(2.15rem, 9vw, 2.75rem);
+    line-height:1.06;
+    letter-spacing:-.035em;
+    margin-bottom:24px;
+  }
+  .hero-dark .hero-sub{
+    font-size:1.04rem;
+    line-height:1.55;
+    margin-bottom:34px;
+    max-width:none;
+    color:rgba(255,255,255,.58);
+  }
+  .hero-dark .hero-cta-row{flex-direction:column;gap:11px;}
+  .hero-dark .btn-hero-primary,.hero-dark .btn-hero-ghost{
+    width:100%;justify-content:center;
+    padding:16px 28px;
+  }
+  /* Imagen del doctor — más cinematográfica, menos altura */
+  .hero-image-frame{
+    aspect-ratio:16/11;
+    border-radius:20px;
+  }
+  /* Quote card más compacta y elegante */
+  .hero-quote-card{
+    padding:18px 20px;
+    border-radius:16px;
+  }
+  .hero-quote-card blockquote{font-size:.92rem;line-height:1.5;}
+  /* Glow orbs más sutiles en mobile (performance + elegancia) */
+  .hero-glow-1{width:380px;height:380px;filter:blur(60px);opacity:.4;}
+  .hero-glow-2{width:320px;height:320px;filter:blur(60px);opacity:.3;}
+  /* SVG decorativo más tenue en mobile */
+  .hero-dark .hero-bg-effect{opacity:.5;}
 }
 
 
@@ -1845,6 +1882,62 @@ body.modal-open{overflow:hidden;}
 /* La sección s2rm que sigue arranca limpia */
 .s2rm{
   background:linear-gradient(180deg, #f5f7f3 0%, var(--bone) 220px) !important;
+}
+
+
+/* ============================================
+   MOBILE LUXURY REFINEMENT — fase final
+   spacing · tipografía · transición · performance
+   ============================================ */
+@media(max-width:640px){
+  /* 2. SPACING — ritmo vertical elegante, consistente */
+  .section{padding:64px 22px !important;}
+  .section-head{margin-bottom:36px !important;}
+  .compliance{padding:64px 22px !important;}
+  .cta-final{padding:72px 22px !important;}
+  .contact{padding:64px 22px !important;}
+
+  /* 3. TIPOGRAFÍA — escalas controladas, párrafos legibles */
+  .section h2, h2{
+    font-size:clamp(1.7rem, 7vw, 2.15rem) !important;
+    line-height:1.1 !important;
+    letter-spacing:-.03em !important;
+  }
+  .section-p, .showcase-p{
+    font-size:1rem !important;
+    line-height:1.6 !important;
+    max-width:none;
+  }
+  /* Kickers de sección consistentes en mobile */
+  .section-kicker, .kicker{
+    font-size:10px !important;
+    margin-bottom:16px !important;
+  }
+
+  /* 4. STACKING — el grid de productos en 1 columna se siente más editorial
+        que 2 columnas apretadas tipo catálogo */
+  .pro-grid, .cosm-grid{
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+  /* Con 1 columna, las cards pueden mostrar más info y respirar */
+  .pro-card-desc{display:block !important;}
+  .cosm-card-desc{display:block !important;}
+  .compliance-grid{grid-template-columns:1fr 1fr !important;gap:10px !important;}
+
+  /* 5. TRANSICIÓN DARK→LIGHT — el ticker como puente, más suave en mobile */
+  .ticker{padding:16px 0 !important;}
+  .s2rm{
+    background:linear-gradient(180deg, #f3f6f1 0%, var(--bone) 160px) !important;
+  }
+
+  /* 6. PERFORMANCE — reducir blur pesado en mobile */
+  .hero-quote-card{backdrop-filter:blur(12px) !important;}
+  .compliance-card, .pro-card, .cosm-card{
+    transition:transform .3s var(--ease) !important;
+  }
+  /* Desactivar hover transforms en touch (no aplican, ahorran repaint) */
+  .pro-card:hover, .cosm-card:hover{transform:none !important;}
 }
 
 </style>
